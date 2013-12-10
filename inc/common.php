@@ -1478,12 +1478,14 @@ function send_redirect($url) {
 
     // work around IE bug
     // http://www.ianhoar.com/2008/11/16/internet-explorer-6-and-redirected-anchor-links/
-    list($url, $hash) = explode('#', $url);
-    if($hash) {
-        if(strpos($url, '?')) {
-            $url = $url.'&#'.$hash;
-        } else {
-            $url = $url.'?&#'.$hash;
+    if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6.') !== FALSE) {
+        list($url, $hash) = explode('#', $url);
+        if($hash) {
+            if(strpos($url, '?')) {
+                $url = $url.'&#'.$hash;
+            } else {
+                $url = $url.'?&#'.$hash;
+            }
         }
     }
 
